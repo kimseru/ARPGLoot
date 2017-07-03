@@ -1,4 +1,3 @@
-ARPG Item Rolls v1.1.2
 Action-RPG inspired loot system that adds 37 new modifiers to your gear!
 Modifiers on non-crafted items are discovered with a scroll of identify sold by the merchant.
 +18 weapon modifiers
@@ -42,3 +41,5 @@ v1.1.1
 v1.1.2
 	rebalanced some affixes
 	changed scroll and tome sprites
+v1.1.3
+	fixed bug with equipping unidentified armor or accessories

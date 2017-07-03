@@ -1146,7 +1146,7 @@ namespace ARPGLoot
                 rand = new Random(seed);
                 Assign(item);
             }
-            if (itemType.Equals("armor") && modifiers.Length > 0)
+            if (itemType.Equals("armor") && rarityValue > 0)
             {
                 bool moving = player.velocity.Length() > 0;   //returns true if player is moving
                 if (HasMod(1) > -1)
@@ -1234,7 +1234,7 @@ namespace ARPGLoot
                         player.GetModPlayer<ARPGPlayer>(mod).maxDamageTaken3 = int.MaxValue;
                 }
             }
-            if (itemType.Equals("accessory") && modifiers.Length > 0)
+            if (itemType.Equals("accessory") && rarityValue > 0)
             {
                 if (HasMod(1) > -1)
                 {
