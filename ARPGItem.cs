@@ -265,7 +265,7 @@ namespace ARPGLoot
                                 {
                                     if (item.magic) //reduced mana cost
                                     {
-                                        tempValue = rand.Next(0, 4) + 1;
+                                        tempValue = rand.Next(0, 2) + 1;
                                         modifiers[i] = 14;
                                         modifierValues[i] = tempValue;
                                         break;
@@ -295,7 +295,7 @@ namespace ARPGLoot
                                     }
                                     else //chance to life leech
                                     {
-                                        tempValue = rand.Next(3 - 1, 10) + 1;
+                                        tempValue = rand.Next(4, 10) + 1;
                                         modifiers[i] = 18;
                                         modifierValues[i] = tempValue;
                                     }
@@ -404,7 +404,7 @@ namespace ARPGLoot
                                     if (item.magic) //reduced mana cost
                                     {
                                         modifiers[i] = 14;
-                                        modifierValues[i] = 4;
+                                        modifierValues[i] = 2;
                                         break;
                                     }
                                     int temp;
@@ -670,7 +670,7 @@ namespace ARPGLoot
                                 }
                             case (5):   //endurance
                                 {
-                                    tempValue = rand.Next(1, 4) + 1;
+                                    tempValue = rand.Next(1, 3) + 1;
                                     modifiers[i] = 5;
                                     modifierValues[i] = tempValue;
                                     break;
@@ -737,7 +737,7 @@ namespace ARPGLoot
                                 }
                             case (5):
                                 {
-                                    modifiers[i] = 4;
+                                    modifiers[i] = 3;
                                     modifierValues[i] = 5;
                                     break;
                                 }

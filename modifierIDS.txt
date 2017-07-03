@@ -13,11 +13,11 @@ Weapon
 		11	7	+5-10% attack speed during day				Main.dayTime
 		12		+5-10% attack speed during night				!Main.dayTime	
 		13	8	+25-50% crit when invulnerable
-		14	9	1-4 mana cost reduction
+		14	9	1-2 mana cost reduction
 		15		+10-100% inflict fire
 		16	10	+10-50% inflict frostburn
 		17	11	+5-25% inflict cursed inferno
-		18	12	+3-10 life steal
+		18	12	+5-10% chance to leech (3 life with projectiles, 10 life with melee swings)
 Armor		
 		1	1	+10-15% defense
 		2		+20-25% defense while standing still
@@ -34,7 +34,7 @@ Accessory
 		2	2	increases armor penetration by 2-5				player.armorPenetration
 		3	3	increases health regen by 1-2				player.lifeRegen
 		4	4	+10-20% thorns					player.thorns
-		5	5	-2-4% damage taken				player.endurance
+		5	5	-2-3% damage taken				player.endurance
 		6	6	+5-10 max hp					player.statLifeMax2
 		7		+5-10 max mp					player.statManaMax2
 		8	7	-5-7% mana usage					player.manaCost
