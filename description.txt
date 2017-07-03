@@ -1,0 +1,41 @@
+ARPG Item Rolls v1.1.1
+Action-RPG inspired loot system that adds 37 new modifiers to your gear!
+Modifiers on non-crafted items are discovered with a scroll of identify sold by the merchant.
++18 weapon modifiers
++10 armor modifiers
++9 accessory modifiers
+Randomized loot quality
+	Magical
++1 unique modifier
+	Rare (25%)
++2 unique modifiers, 1 for accessories
+	Legendary (10%)
++3 unique modifiers, 2 for accessories
+	Primal (1%)
++3 unique modifers for weapons and armor, 2 for accessories 
++PERFECT rolls in each modifier
+Custom modifier effects, for example:
++damage when standing still
++attack speed during night
++damage in jungle
+	damage taken cannot exceed a certain amount
+	ignores damage taken if under an amount
+...and much more!
+
+v1.0.0
+	added 37 modifiers
+v1.0.1
+	fixed armor ignoring modifier not calculating defense
+v1.0.2
+	added multiplayer compatibility
+v1.0.3
+	fixed item rolls reseting when reforged
+v1.1.0
+	non crafted items now spawn as unidentified
+	added scroll of identify
+		bought from the merchant
+		required to discover item's modifiers
+v1.1.1
+	added tome of identify
+		created with 100 scrolls of identify and a tome at a bookcase
+		not consumed when used

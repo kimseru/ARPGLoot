@@ -1,0 +1,43 @@
+TYPE		ID	CASE	EFFECT						RESOURCES
+Weapon	
+		1	1	+5-10% damage when standing still				player.moveSpeed, item.damage			
+		2	2	+5-25% knockback when running				player.moveSpeed, item.knockBack
+		3	3	+15-20% damage when below 50% hp				player.statLife, player.statLifeMax2, item.damage	
+		4		+5-15% damage when full hp											
+		5	4	+5-10% damage when below 50% mp				player.statMana					
+		6	5	+5-15% damage when below 20 def (prehm), 50 (hm)		player.statDefense					
+		7	6	+5-10% damage in jungle					player.ZoneJungle
+		8		+5-10% damage in corruption / crimson			player.ZoneCorrupt || player.ZoneCrimson
+		9		+5-10% damage in water					player.ZoneHoly
+		10		+5-10% damage in hallow					player.adjWater || player.oldAdjWater
+		11	7	+5-10% attack speed during day				Main.dayTime
+		12		+5-10% attack speed during night				!Main.dayTime	
+		13	8	+25-50% crit when invulnerable
+		14	9	1-4 mana cost reduction
+		15		+10-100% inflict fire
+		16	10	+10-50% inflict frostburn
+		17	11	+5-25% inflict cursed inferno
+		18	12	+3-10 life steal
+Armor		
+		1	1	+10-15% defense
+		2		+20-25% defense while standing still
+		3		+20-25% defense while under 50% hp
+		4	2	+10-20 max HP						player.statLifeMax2
+		5		+10-20 max MP						player.statManaMax2
+		6	3	+5-10% move speed					player.maxRunSpeed
+		7		+10-15% jump speed					player.jumpSpeedBoost
+		8	4	+5-10% mining speed					player.pickSpeed
+		9	5	ignores damage taken if under 5-10
+		10	6	*damage taken can not exceed 100-150 (prehm), 150-200 (hm)
+Accessory
+		1	1	*reduces potion cooldown by 3-6 seconds			player.potionDelay
+		2	2	increases armor penetration by 2-5				player.armorPenetration
+		3	3	increases health regen by 1-2				player.lifeRegen
+		4	4	+10-20% thorns					player.thorns
+		5	5	-2-4% damage taken				player.endurance
+		6	6	+5-10 max hp					player.statLifeMax2
+		7		+5-10 max mp					player.statManaMax2
+		8	7	-5-7% mana usage					player.manaCost
+		9	8	+10-20% increased invulnerability time			player.immuneTime
+
+*does not stack as of now
