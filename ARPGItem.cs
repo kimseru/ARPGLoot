@@ -12,7 +12,6 @@ namespace ARPGLoot
     public class ARPGItem : GlobalItem
     {
         private int seedPlus;
-        private Player player;
 
         private Random rand;
         private int randNum;
@@ -34,14 +33,13 @@ namespace ARPGLoot
         public ARPGItem()
         {
             seedPlus = -1;
-            player = Main.LocalPlayer;
             rand = new Random();
             randNum = -1;
             rarity = "";
             itemType = "";
             rarityValue = -1;
-            modifiers = null;
-            modifierValues = null;
+            modifiers = new int[0];
+            modifierValues = new int[0];
             magicUp = false;
         }
 
@@ -63,29 +61,12 @@ namespace ARPGLoot
             }
         }
 
-        public override GlobalItem Clone(Item item, Item itemClone)
-        {
-            ARPGItem myClone = (ARPGItem)base.Clone(item, itemClone);
-            myClone.itemType = itemType;
-            myClone.rarity = rarity;
-            myClone.rarityValue = rarityValue;
-            myClone.modifiers = modifiers;
-            myClone.modifierValues = modifierValues;
-
-            myClone.baseDamage = baseDamage;
-            myClone.baseCrit = baseCrit;
-            myClone.baseDefense = baseDefense;
-            myClone.baseMana = baseMana;
-
-            return myClone;
-        }
-
         public void Roll(Item item)
         {
             if (rarityValue > 0 && !magicUp && !reroll)
                 return;
             Assign(item);
-            if ((itemType.Length > 0 && !magicUp)||reroll)
+            if ((itemType.Length > 0 && !magicUp) || reroll)
             {
                 if (reroll)
                     reroll = false;
@@ -125,7 +106,7 @@ namespace ARPGLoot
                 if (soundPath.Length > 0)
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundPath).WithVolume(1f));
             }
-            else if(magicUp)
+            else if (magicUp)
             {
                 if (itemType != "accessory")
                     rarityValue++;
@@ -1295,12 +1276,13 @@ namespace ARPGLoot
         public override TagCompound Save(Item item)
         {
             return new TagCompound {
-                {"itemType",itemType},{"rarity", rarity},{"rarityValue", rarityValue},{"modifiers", modifiers},{"modifierValues", modifierValues},{"baseDamage",baseDamage},{"baseCrit",baseCrit},{"baseDefense",baseDefense},{"baseMana",baseMana}
+                {"seedPlus",seedPlus },{"itemType",itemType},{"rarity", rarity},{"rarityValue", rarityValue},{"modifiers", modifiers},{"modifierValues", modifierValues},{"baseDamage",baseDamage},{"baseCrit",baseCrit},{"baseDefense",baseDefense},{"baseMana",baseMana},{"reroll",reroll },{"magicUp",magicUp}
             };
         }
 
         public override void Load(Item item, TagCompound tag)
         {
+            seedPlus = tag.GetInt("seedPlus");
             itemType = tag.GetString("itemType");
             rarity = tag.GetString("rarity");
             rarityValue = tag.GetInt("rarityValue");
@@ -1311,6 +1293,9 @@ namespace ARPGLoot
             baseCrit = tag.GetInt("baseCrit");
             baseDefense = tag.GetInt("baseDefense");
             baseMana = tag.GetInt("baseMana");
+
+            reroll = tag.GetBool("reroll");
+            magicUp = tag.GetBool("magicUp");
 
             if (itemType.Equals("weapon"))
             {
@@ -1328,7 +1313,6 @@ namespace ARPGLoot
                 player.GetModPlayer<ARPGPlayer>(mod).seedPlus = player.GetModPlayer<ARPGPlayer>(mod).seedPlus + 1;
                 this.seedPlus = player.GetModPlayer<ARPGPlayer>(mod).seedPlus;
             }
-            this.player = player;
             if (rarity.Equals("Unidentified"))
             {
                 player.GetModPlayer<ARPGPlayer>(mod).canUse = true;
@@ -1357,7 +1341,7 @@ namespace ARPGLoot
                 player.GetModPlayer<ARPGPlayer>(mod).canMagicUpgrade = false;
             }
 
-            if(rarity.Length > 0 && rarity != "Unidentified")
+            if (rarity.Length > 0 && rarity != "Unidentified")
             {
                 player.GetModPlayer<ARPGPlayer>(mod).canReroll = true;
             }
@@ -1390,17 +1374,18 @@ namespace ARPGLoot
 
         public override void PreReforge(Item item)
         {
-            player.GetModPlayer<ARPGPlayer>(mod).ir = (ARPGItem)Clone(item, new Item());
+            Main.LocalPlayer.GetModPlayer<ARPGPlayer>(mod).ir = (ARPGItem)Clone(item, new Item());
         }
 
         public override void PostReforge(Item item)
         {
-            if (player.GetModPlayer<ARPGPlayer>(mod).ir != null)
-                Unpack(player.GetModPlayer<ARPGPlayer>(mod).ir);
+            if (Main.LocalPlayer.GetModPlayer<ARPGPlayer>(mod).ir != null)
+                Unpack(Main.LocalPlayer.GetModPlayer<ARPGPlayer>(mod).ir);
         }
 
         public void Unpack(ARPGItem item)
         {
+            seedPlus = item.seedPlus;
             itemType = item.itemType;
             rarity = item.rarity;
             rarityValue = item.rarityValue;
@@ -1412,38 +1397,83 @@ namespace ARPGLoot
             baseMana = item.baseMana;
         }
 
+        public override GlobalItem Clone(Item item, Item itemClone)
+        {
+            ARPGItem myClone = (ARPGItem)base.Clone(item, itemClone);
+            myClone.seedPlus = seedPlus;
+            myClone.itemType = itemType;
+            myClone.rarity = rarity;
+            myClone.rarityValue = rarityValue;
+            myClone.modifiers = modifiers;
+            myClone.modifierValues = modifierValues;
+
+            myClone.baseDamage = baseDamage;
+            myClone.baseCrit = baseCrit;
+            myClone.baseDefense = baseDefense;
+            myClone.baseMana = baseMana;
+
+            myClone.reroll = reroll;
+            myClone.magicUp = magicUp;
+
+            return myClone;
+        }
+
         public override void NetSend(Item item, BinaryWriter writer)
         {
+            writer.Write(seedPlus);
             writer.Write(itemType);
             writer.Write(rarity);
             writer.Write(rarityValue);
+
+            writer.Write(modifiers.Length);
             for (int i = 0; i < modifiers.Length; i++)
             {
                 writer.Write(modifiers[i]);
             }
+
+            writer.Write(modifierValues.Length);
             for (int i = 0; i < modifierValues.Length; i++)
             {
-                writer.Write(modifierValues[i]);
+                writer.Write(modifiers[i]);
             }
+
+            writer.Write(reroll);
+            writer.Write(magicUp);
             writer.Write(baseDamage);
             writer.Write(baseCrit);
             writer.Write(baseDefense);
             writer.Write(baseMana);
+
         }
 
         public override void NetReceive(Item item, BinaryReader reader)
         {
+            seedPlus = reader.ReadInt32();
             itemType = reader.ReadString();
             rarity = reader.ReadString();
             rarityValue = reader.ReadInt32();
-            for (int i = 0; i < rarityValue; i++)
+
+            int temp = reader.ReadInt32();
+            modifiers = new int[temp];
+            if (temp > 0)
             {
-                modifiers[i] = reader.ReadInt32();
+                for (int i = 0; i < temp; i++)
+                {
+                    modifiers[i] = reader.ReadInt32();
+                }
             }
-            for (int i = 0; i < rarityValue; i++)
+            temp = reader.ReadInt32();
+            modifierValues = new int[temp];
+            if (temp > 0)
             {
-                modifierValues[i] = reader.ReadInt32();
+                for (int i = 0; i < temp; i++)
+                {
+                    modifierValues[i] = reader.ReadInt32();
+                }
             }
+
+            reroll = reader.ReadBoolean();
+            magicUp = reader.ReadBoolean();
             baseDamage = reader.ReadInt32();
             baseCrit = reader.ReadInt32();
             baseDefense = reader.ReadInt32();

@@ -52,3 +52,5 @@ v1.2.0
 		allows a reroll on a single item
 		crafted with 1 bottled water, 1 ectoplasm, and 1 soul of sight
 		drops post-plantera
+v1.2.1
+	fixed items not dropping properly and chests not storing items properly in multiplayer
