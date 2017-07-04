@@ -34,11 +34,19 @@ namespace ARPGLoot
         public bool clarity2 = false;
         public bool canUse = false;
 
+        public bool canMagicUpgrade = false;
+        public bool magicClarity = false;
+
+        public bool canReroll = false;
+        public bool reroll = false;
+
         public int seedPlus = 0;
 
         public override void PreUpdate()
         {
             canUse = false;
+            canMagicUpgrade = false;
+            canReroll = false;
             if (onHit.Length > 0)
             {
                 onHit = "";
@@ -57,6 +65,7 @@ namespace ARPGLoot
         public override void PostUpdate()
         {
             clarity2 = false;
+            magicClarity = false;
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -138,6 +147,7 @@ namespace ARPGLoot
             if (immuneDamage > finalDamage)
             {
                 damage = 0;
+                immuneDamage = 0;
                 immuneDamage1 = 0;
                 immuneDamage2 = 0;
                 immuneDamage3 = 0;

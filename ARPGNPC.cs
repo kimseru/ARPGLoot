@@ -19,11 +19,22 @@ namespace ARPGLoot
 
         public override void NPCLoot(NPC npc)
         {
+            Random rand = new Random();
             if (npc.lifeMax > 5 && npc.value > 0f)
             {
-                Random rand = new Random();
                 if (rand.Next(0, 20) == 0)
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Reroll"));
+                
+            }
+            if (Main.hardMode && npc.lifeMax > 200 && npc.value > 0f)
+            {
+                if (rand.Next(0, 50) == 0)
+                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("magicUpgrade"));
+            }
+            if (NPC.downedPlantBoss && npc.lifeMax > 500 && npc.value > 0f)
+            {
+                if (rand.Next(0, 100) == 0)
+                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("itemReroll"));
             }
         }
 

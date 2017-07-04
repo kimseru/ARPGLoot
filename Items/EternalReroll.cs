@@ -29,7 +29,7 @@ namespace ARPGLoot.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tome of Identify");
-            Tooltip.SetDefault("Right click to identify an item" + "\n" + "Selects top then left items first" + "\n" + "Not consumable");
+            Tooltip.SetDefault("Right click to identify an item" + "\n" + "Selects top left items first" + "\n" + "Not consumable");
         }
 
         public override void SetDefaults()

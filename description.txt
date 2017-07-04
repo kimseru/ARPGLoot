@@ -43,3 +43,12 @@ v1.1.2
 	changed scroll and tome sprites
 v1.1.3
 	fixed bug with equipping unidentified armor or accessories
+v1.2.0
+	added added orb of alchemy
+		used to upgrade a single magical item to rare quality
+		crafted with 1 soul of night and 3 cursed flame or ichor
+		drops in hardmode
+	added essence of favorable fate
+		allows a reroll on a single item
+		crafted with 1 bottled water, 1 ectoplasm, and 1 soul of sight
+		drops post-plantera

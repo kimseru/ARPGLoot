@@ -28,6 +28,9 @@ namespace ARPGLoot
         private int baseDefense;
         private int baseMana;
 
+        private bool magicUp = false;
+        private bool reroll = false;
+
         public ARPGItem()
         {
             seedPlus = -1;
@@ -39,6 +42,7 @@ namespace ARPGLoot
             rarityValue = -1;
             modifiers = null;
             modifierValues = null;
+            magicUp = false;
         }
 
         public override void SetDefaults(Item item)
@@ -78,11 +82,13 @@ namespace ARPGLoot
 
         public void Roll(Item item)
         {
-            if (rarityValue > 0)
+            if (rarityValue > 0 && !magicUp && !reroll)
                 return;
             Assign(item);
-            if (itemType.Length > 0)
+            if ((itemType.Length > 0 && !magicUp)||reroll)
             {
+                if (reroll)
+                    reroll = false;
                 String soundPath = "";
                 randNum = rand.Next(0, 101);
                 if (randNum % 100 == 0)
@@ -118,6 +124,12 @@ namespace ARPGLoot
                 }
                 if (soundPath.Length > 0)
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundPath).WithVolume(1f));
+            }
+            else if(magicUp)
+            {
+                if (itemType != "accessory")
+                    rarityValue++;
+                rarity = "Rare";
             }
             else
             {
@@ -1238,7 +1250,7 @@ namespace ARPGLoot
             {
                 if (HasMod(1) > -1)
                 {
-                    player.GetModPlayer<ARPGPlayer>(mod).potionReduce = modifierValues[HasMod(1)];
+                    player.GetModPlayer<ARPGPlayer>(mod).potionReduce += modifierValues[HasMod(1)];
                 }
                 if (HasMod(2) > -1)
                 {
@@ -1324,12 +1336,36 @@ namespace ARPGLoot
             if (player.GetModPlayer<ARPGPlayer>(mod).clarity2 && rarity.Equals("Unidentified"))
             {
                 Roll(item);
+                player.GetModPlayer<ARPGPlayer>(mod).canUse = false;
             }
             if ((player.GetModPlayer<ARPGPlayer>(mod).clarity && rarity.Equals("Unidentified")))
             {
                 Roll(item);
                 player.GetModPlayer<ARPGPlayer>(mod).clarity = false;
                 player.GetModPlayer<ARPGPlayer>(mod).canUse = false;
+            }
+
+            if (rarity == "Magical")
+            {
+                player.GetModPlayer<ARPGPlayer>(mod).canMagicUpgrade = true;
+            }
+            if ((player.GetModPlayer<ARPGPlayer>(mod).magicClarity && rarity.Equals("Magical")))
+            {
+                magicUp = true;
+                Roll(item);
+                player.GetModPlayer<ARPGPlayer>(mod).magicClarity = false;
+                player.GetModPlayer<ARPGPlayer>(mod).canMagicUpgrade = false;
+            }
+
+            if(rarity.Length > 0 && rarity != "Unidentified")
+            {
+                player.GetModPlayer<ARPGPlayer>(mod).canReroll = true;
+            }
+            if (player.GetModPlayer<ARPGPlayer>(mod).reroll && rarity.Length > 0)
+            {
+                reroll = true;
+                Roll(item);
+                player.GetModPlayer<ARPGPlayer>(mod).reroll = false;
             }
         }
 
