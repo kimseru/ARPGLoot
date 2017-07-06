@@ -144,7 +144,7 @@ namespace ARPGLoot
             }
 
             int immuneDamage = immuneDamage1 + immuneDamage2 + immuneDamage3;
-            if (immuneDamage > finalDamage)
+            if (immuneDamage > finalDamage+1)
             {
                 damage = 0;
                 immuneDamage = 0;

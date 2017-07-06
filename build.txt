@@ -1,5 +1,6 @@
 author = Kimseru
 
-version = 1.2.2
+version = 1.2.3
 displayName = ARPG Loot
 homepage = https://forums.terraria.org/index.php?threads/1-3-arpg-loot.59447/
+includeSource = true

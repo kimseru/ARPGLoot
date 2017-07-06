@@ -58,3 +58,5 @@ v1.2.2
 	magic items can now roll chance on hit affixes
 	improved magic reduction scaling on weapons
 	fixed damage in jungle affix not working properly
+1.2.3
+	fixed items not storing affix values properly in multiplayer

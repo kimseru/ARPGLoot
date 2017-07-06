@@ -53,6 +53,14 @@ namespace ARPGLoot
             baseMana = item.mana;
         }
 
+        public override bool CloneNewInstances
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public override bool InstancePerEntity
         {
             get
@@ -1406,6 +1414,27 @@ namespace ARPGLoot
             baseMana = item.baseMana;
         }
 
+        public override GlobalItem Clone()
+        {
+            ARPGItem myClone = (ARPGItem)base.Clone();
+            myClone.seedPlus = seedPlus;
+            myClone.itemType = itemType;
+            myClone.rarity = rarity;
+            myClone.rarityValue = rarityValue;
+            myClone.modifiers = modifiers;
+            myClone.modifierValues = modifierValues;
+
+            myClone.baseDamage = baseDamage;
+            myClone.baseCrit = baseCrit;
+            myClone.baseDefense = baseDefense;
+            myClone.baseMana = baseMana;
+
+            myClone.reroll = reroll;
+            myClone.magicUp = magicUp;
+
+            return myClone;
+        }
+
         public override GlobalItem Clone(Item item, Item itemClone)
         {
             ARPGItem myClone = (ARPGItem)base.Clone(item, itemClone);
@@ -1443,7 +1472,7 @@ namespace ARPGLoot
             writer.Write(modifierValues.Length);
             for (int i = 0; i < modifierValues.Length; i++)
             {
-                writer.Write(modifiers[i]);
+                writer.Write(modifierValues[i]);
             }
 
             writer.Write(reroll);
