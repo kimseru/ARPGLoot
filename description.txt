@@ -47,10 +47,14 @@ v1.2.0
 	added added orb of alchemy
 		used to upgrade a single magical item to rare quality
 		crafted with 1 soul of night and 3 cursed flame or ichor
-		drops in hardmode
+		drops in hardmode (2%)
 	added essence of favorable fate
 		allows a reroll on a single item
 		crafted with 1 bottled water, 1 ectoplasm, and 1 soul of sight
-		drops post-plantera
+		drops post-plantera (1%)
 v1.2.1
 	fixed items not dropping properly and chests not storing items properly in multiplayer
+v1.2.2
+	magic items can now roll chance on hit affixes
+	improved magic reduction scaling on weapons
+	fixed damage in jungle affix not working properly

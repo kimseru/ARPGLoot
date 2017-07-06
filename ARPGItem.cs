@@ -63,6 +63,10 @@ namespace ARPGLoot
 
         public void Roll(Item item)
         {
+            if (baseMana > 0)
+            {
+                item.mana = baseMana;
+            }
             if (rarityValue > 0 && !magicUp && !reroll)
                 return;
             Assign(item);
@@ -256,7 +260,7 @@ namespace ARPGLoot
                                 }
                             case (9):
                                 {
-                                    if (item.magic) //reduced mana cost
+                                    if (item.magic && rand.Next(0, 2) == 0) //reduced mana cost
                                     {
                                         tempValue = rand.Next(0, 2) + 1;
                                         modifiers[i] = 14;
@@ -770,27 +774,34 @@ namespace ARPGLoot
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "Rarity", "" + rarity + "");
+            Color rareColor;
             if (rarity.Equals("Magical"))
             {
-                line.overrideColor = new Color(130, 135, 240);
+                rareColor = new Color(130, 135, 240);
+                line.overrideColor = rareColor;
             }
             else if (rarity.Equals("Rare"))
             {
-                line.overrideColor = new Color(249, 249, 9);
+                rareColor = new Color(249, 249, 9);
+                line.overrideColor = rareColor;
             }
             else if (rarity.Equals("Legendary"))
             {
-                line.overrideColor = new Color(241, 165, 0);
+                rareColor = new Color(241, 165, 0);
+                line.overrideColor = rareColor;
             }
             else if (rarity.Equals("Primal"))
             {
-                line.overrideColor = new Color(225, 0, 49);
+                rareColor = new Color(225, 0, 49);
+                line.overrideColor = rareColor;
             }
             else
             {
-                line.overrideColor = new Color(102, 204, 255);
+                rareColor = new Color(102, 204, 255);
+                line.overrideColor = rareColor;
             }
             tooltips.Insert(1, line);
+
             if (itemType.Equals("weapon"))
             {
                 for (int i = 0; i < rarityValue; i++)
@@ -888,7 +899,7 @@ namespace ARPGLoot
 
                     TooltipLine line2;
                     line2 = new TooltipLine(mod, "Modifiers", signString + modifierValues[i] + percentString + " " + modifierName);
-                    line2.overrideColor = Color.LightGreen;
+                    line2.overrideColor = rareColor;
                     tooltips.Add(line2);
                 }
             }
@@ -968,7 +979,7 @@ namespace ARPGLoot
                         line2 = new TooltipLine(mod, "Modifiers", modifierName + " " + modAmount);
                     else
                         line2 = new TooltipLine(mod, "Modifiers", modifierName + " " + modAmount);
-                    line2.overrideColor = Color.LightGreen;
+                    line2.overrideColor = rareColor;
                     tooltips.Add(line2);
                 }
             }
@@ -1045,7 +1056,7 @@ namespace ARPGLoot
                         line2 = new TooltipLine(mod, "Modifiers", modifierName + " " + modAmount);
                     else
                         line2 = new TooltipLine(mod, "Modifiers", modifierName + " " + modAmount);
-                    line2.overrideColor = Color.LightGreen;
+                    line2.overrideColor = rareColor;
                     tooltips.Add(line2);
                 }
             }
@@ -1069,7 +1080,7 @@ namespace ARPGLoot
                 else if (HasMod(6) > -1 && player.statDefense < 50 && Main.hardMode)  //less than 50 def in hardmode
                     damage = (int)Math.Round(((1 + (modifierValues[HasMod(6)] / 100.0)) * damage));
                 if (HasMod(7) > -1 && player.ZoneJungle)    //player in jungle
-                    damage = (int)Math.Round(((1 + (modifierValues[HasMod(8)] / 100.0)) * damage));
+                    damage = (int)Math.Round(((1 + (modifierValues[HasMod(7)] / 100.0)) * damage));
                 if (HasMod(8) > -1 && (player.ZoneCorrupt || player.ZoneCrimson))    //player in evil
                     damage = (int)Math.Round(((1 + (modifierValues[HasMod(8)] / 100.0)) * damage));
                 if (HasMod(9) > -1 && (player.adjWater || player.oldAdjWater))    //player in water
@@ -1296,14 +1307,6 @@ namespace ARPGLoot
 
             reroll = tag.GetBool("reroll");
             magicUp = tag.GetBool("magicUp");
-
-            if (itemType.Equals("weapon"))
-            {
-                if (item.magic && HasMod(14) > -1)
-                {
-                    item.mana = baseMana - modifierValues[HasMod(14)];
-                }
-            }
         }
 
         public override void UpdateInventory(Item item, Player player)
@@ -1350,6 +1353,12 @@ namespace ARPGLoot
                 reroll = true;
                 Roll(item);
                 player.GetModPlayer<ARPGPlayer>(mod).reroll = false;
+            }
+
+            if (HasMod(14) > -1)
+            {
+                int tempMana = (int)((float)baseMana * player.manaCost);
+                item.mana = (tempMana - modifierValues[HasMod(14)]);
             }
         }
 
@@ -1511,7 +1520,7 @@ namespace ARPGLoot
 
         private int HasMod(int mod)
         {
-            if (modifiers != null)
+            if (modifiers != null && modifiers.Length > 0)
             {
                 for (int i = 0; i < modifiers.Length; i++)
                 {
