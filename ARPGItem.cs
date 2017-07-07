@@ -1520,31 +1520,32 @@ namespace ARPGLoot
 
         private void Assign(Item item)
         {
-            int seed = 0;   //used to pseudo-randomize items, especially when spawning for the first time
-            for (int i = 0; i < item.Name.Length; i++)
+            if (rarity.Length == 0)
             {
-                seed += (int)item.Name[i];
+                int seed = 0;   //used to pseudo-randomize items, especially when spawning for the first time
+                for (int i = 0; i < item.Name.Length; i++)
+                {
+                    seed += (int)item.Name[i];
+                }
+                seed += seedPlus;
+                seed += (int)DateTime.UtcNow.Ticks;
+                rand = new Random(seed);
+                if (item.maxStack == 1 && item.accessory)
+                {
+                    itemType = "accessory";
+                    rarity = "Unidentified";
+                }
+                else if (item.maxStack == 1 && item.damage > 0)
+                {
+                    itemType = "weapon";
+                    rarity = "Unidentified";
+                }
+                else if (item.maxStack == 1 && item.defense > 0)
+                {
+                    itemType = "armor";
+                    rarity = "Unidentified";
+                }
             }
-            seed += seedPlus;
-            seed += (int)DateTime.UtcNow.Ticks;
-            rand = new Random(seed);
-
-            if (item.maxStack == 1 && item.accessory)
-            {
-                itemType = "accessory";
-                rarity = "Unidentified";
-            }
-            else if (item.maxStack == 1 && item.damage > 0)
-            {
-                itemType = "weapon";
-                rarity = "Unidentified";
-            }
-            else if (item.maxStack == 1 && item.defense > 0)
-            {
-                itemType = "armor";
-                rarity = "Unidentified";
-            }
-
         }
 
         private int HasMod(int mod)

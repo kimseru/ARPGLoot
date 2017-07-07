@@ -30,7 +30,7 @@ namespace ARPGLoot.Items
         {
             DisplayName.SetDefault("Orb of Alchemy");
             Tooltip.SetDefault("Right click to upgrade a single magical item to rare quality" + "\n" + "Selects top left items first" + "\n" + "Consumable");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(10, 5));
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
         }
 
         public override void AddRecipes()
