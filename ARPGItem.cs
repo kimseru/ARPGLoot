@@ -1520,16 +1520,16 @@ namespace ARPGLoot
 
         private void Assign(Item item)
         {
+            int seed = 0;   //used to pseudo-randomize items, especially when spawning for the first time
+            for (int i = 0; i < item.Name.Length; i++)
+            {
+                seed += (int)item.Name[i];
+            }
+            seed += seedPlus;
+            seed += (int)DateTime.UtcNow.Ticks;
+            rand = new Random(seed);
             if (rarity.Length == 0)
             {
-                int seed = 0;   //used to pseudo-randomize items, especially when spawning for the first time
-                for (int i = 0; i < item.Name.Length; i++)
-                {
-                    seed += (int)item.Name[i];
-                }
-                seed += seedPlus;
-                seed += (int)DateTime.UtcNow.Ticks;
-                rand = new Random(seed);
                 if (item.maxStack == 1 && item.accessory)
                 {
                     itemType = "accessory";

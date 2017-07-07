@@ -62,3 +62,5 @@ v1.2.3
 	fixed items not storing affix values properly in multiplayer
 v1.2.4
 	fixed items sometimes turning to unidentified
+v1.2.5
+	improved RNG system
