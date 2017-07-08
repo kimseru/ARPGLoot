@@ -1187,7 +1187,7 @@ namespace ARPGLoot
                 }
                 if (HasMod(6) > -1)
                 {
-                    player.maxRunSpeed = 1f + (modifierValues[HasMod(6)] / 100.0f) * player.maxRunSpeed;
+                    player.moveSpeed *= 1+(modifierValues[HasMod(6)] / 100.0f);
                 }
                 else if (HasMod(7) > -1)
                 {

@@ -64,3 +64,5 @@ v1.2.4
 	fixed items sometimes turning to unidentified
 v1.2.5
 	improved RNG system
+v1.2.6
+	increased effectiveness of move speed affix
