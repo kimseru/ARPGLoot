@@ -45,7 +45,7 @@ namespace ARPGLoot
 
         public override void SetDefaults(Item item)
         {
-            if (InstancePerEntity)
+            if (InstancePerEntity && itemType.Length <= 0)
                 Assign(item);
             baseDamage = item.damage;
             baseCrit = item.crit;
@@ -1408,6 +1408,7 @@ namespace ARPGLoot
             rarityValue = item.rarityValue;
             modifiers = item.modifiers;
             modifierValues = item.modifierValues;
+
             baseDamage = item.baseDamage;
             baseCrit = item.baseCrit;
             baseDefense = item.baseDefense;
@@ -1528,7 +1529,7 @@ namespace ARPGLoot
             seed += seedPlus;
             seed += (int)DateTime.UtcNow.Ticks;
             rand = new Random(seed);
-            if (rarity.Length == 0)
+            if (rarity.Length <= 0 && itemType.Length <= 0)
             {
                 if (item.maxStack == 1 && item.accessory)
                 {
