@@ -66,3 +66,6 @@ v1.2.5
 	improved RNG system
 v1.2.6
 	increased effectiveness of move speed affix
+v1.2.7
+	fixed mining speed not stacking properly
+	fixed minimum immune damage not working as intended

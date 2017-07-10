@@ -47,6 +47,12 @@ namespace ARPGLoot
             canUse = false;
             canMagicUpgrade = false;
             canReroll = false;
+            maxDamageTaken1 = int.MaxValue;
+            maxDamageTaken2 = int.MaxValue;
+            maxDamageTaken3 = int.MaxValue;
+            immuneDamage1 = 0;
+            immuneDamage2 = 0;
+            immuneDamage3 = 0;
             if (onHit.Length > 0)
             {
                 onHit = "";

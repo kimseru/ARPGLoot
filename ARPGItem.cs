@@ -1191,11 +1191,11 @@ namespace ARPGLoot
                 }
                 else if (HasMod(7) > -1)
                 {
-                    player.jumpSpeedBoost = 1f + (modifierValues[HasMod(7)] / 100.0f) * player.jumpSpeedBoost;
+                    player.jumpSpeedBoost *= 1+(modifierValues[HasMod(7)] / 100.0f);
                 }
                 if (HasMod(8) > -1)
                 {
-                    player.pickSpeed = 1f + (modifierValues[HasMod(8)] / 100.0f) * player.pickSpeed;
+                    player.pickSpeed += 1+(modifierValues[HasMod(8)] / 100.0f);
                 }
                 if (HasMod(9) > -1)
                 {
