@@ -67,5 +67,7 @@ v1.2.5
 v1.2.6
 	increased effectiveness of move speed affix
 v1.2.7
-	fixed mining speed not stacking properly
 	fixed minimum immune damage not working as intended
+v1.2.8
+	fixed mining speed not stacking properly
+	made the invulnerability affix not calculate defense
